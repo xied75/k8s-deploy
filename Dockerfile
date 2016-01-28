@@ -26,7 +26,7 @@ COPY k8s/ /usr/local/k8s-deploy/k8s
 COPY nginx/ /usr/local/k8s-deploy/nginx
 COPY keycloak /usr/local/k8s-deploy/keycloak
 COPY template/ /usr/local/k8s-deploy/template
-COPY deploy.sh /usr/local/k8s-deploy
+COPY deploy.sh /usr/local/k8s-deploy/
 
 # ENV, to be overridden
 ENV CLUSTER_NAME=kube1 \
