@@ -1,0 +1,19 @@
+{
+  "spec": {
+    "type": "ClusterIP",
+    "selector": {
+      "name": "postgres"
+    },
+    "ports": [
+      {
+        "port": 5432,
+        "targetPort": "postgres-port"
+      }
+    ]
+  },
+  "metadata": {
+    "name": "postgres"
+  },
+  "apiVersion": "v1",
+  "kind": "Service"
+}

@@ -1,0 +1,55 @@
+{
+  "spec": {
+    "template": {
+      "spec": {
+        "containers": [
+          {
+            "env": [
+              {
+                "value": "keycloak",
+                "name": "POSTGRES_USER"
+              },
+              {
+                "value": "keycloak",
+                "name": "POSTGRES_PASSWORD"
+              },
+              {
+                "value": "keycloak",
+                "name": "POSTGRES_DATABASE"
+              }
+            ],
+            "ports": [
+              {
+                "containerPort": 8080,
+                "name": "keycloak-http"
+              },
+              {
+                "containerPort": 8443,
+                "name": "keycloak-https"
+              }
+            ],
+            "image": "jboss/keycloak-postgres:1.7.0.Final",
+            "name": "keycloak"
+          }
+        ]
+      },
+      "metadata": {
+        "labels": {
+          "name": "keycloak"
+        }
+      }
+    },
+    "selector": {
+      "name": "keycloak"
+    },
+    "replicas": 1
+  },
+  "metadata": {
+    "labels": {
+      "name": "keycloak"
+    },
+    "name": "keycloak"
+  },
+  "apiVersion": "v1",
+  "kind": "ReplicationController"
+}

@@ -1,0 +1,51 @@
+{
+  "spec": {
+    "template": {
+      "spec": {
+        "containers": [
+          {
+            "env": [
+              {
+                "value": "keycloak",
+                "name": "POSTGRES_USER"
+              },
+              {
+                "value": "keycloak",
+                "name": "POSTGRES_PASSWORD"
+              },
+              {
+                "value": "keycloak",
+                "name": "POSTGRES_DB"
+              }
+            ],
+            "ports": [
+              {
+                "containerPort": 5432,
+                "name": "postgres-port"
+              }
+            ],
+            "image": "postgres:9.4.5",
+            "name": "postgres"
+          }
+        ]
+      },
+      "metadata": {
+        "labels": {
+          "name": "postgres"
+        }
+      }
+    },
+    "selector": {
+      "name": "postgres"
+    },
+    "replicas": 1
+  },
+  "metadata": {
+    "labels": {
+      "name": "postgres"
+    },
+    "name": "postgres"
+  },
+  "apiVersion": "v1",
+  "kind": "ReplicationController"
+}

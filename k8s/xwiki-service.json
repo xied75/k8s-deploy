@@ -1,0 +1,28 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "xwiki",
+    "labels": {
+      "app": "xwiki"
+    }
+  },
+  "spec": {
+    "ports": [
+      {
+        "name": "xwiki-http",
+        "port": 8080,
+        "targetPort": "xwiki-http"
+      },
+      {
+        "name": "xwiki-https",
+        "port": 8443,
+        "targetPort": "xwiki-https"
+      }
+    ],
+    "selector": {
+      "name": "xwiki"
+    },
+    "type": "ClusterIP"
+  }
+}

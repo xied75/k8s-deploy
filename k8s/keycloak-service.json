@@ -1,0 +1,28 @@
+{
+  "spec": {
+    "type": "ClusterIP",
+    "selector": {
+      "name": "keycloak"
+    },
+    "ports": [
+      {
+        "targetPort": "keycloak-http",
+        "port": 8080,
+        "name": "keyclock-http"
+      },
+      {
+        "targetPort": "keycloak-https",
+        "port": 8443,
+        "name": "keycloak-https"
+      }
+    ]
+  },
+  "metadata": {
+    "labels": {
+      "app": "keycloak"
+    },
+    "name": "keycloak"
+  },
+  "apiVersion": "v1",
+  "kind": "Service"
+}

@@ -1,0 +1,28 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "sampleapp",
+    "labels": {
+      "app": "sampleapp"
+    }
+  },
+  "spec": {
+    "ports": [
+      {
+        "name": "sampleapp-http",
+        "port": 8080,
+        "targetPort": "sampleapp-http"
+      },
+      {
+        "name": "sampleapp-https",
+        "port": 8443,
+        "targetPort": "sampleapp-https"
+      }
+    ],
+    "selector": {
+      "name": "sampleapp"
+    },
+    "type": "ClusterIP"
+  }
+}

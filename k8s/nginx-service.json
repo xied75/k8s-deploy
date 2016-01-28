@@ -1,0 +1,28 @@
+{
+  "spec": {
+    "type": "LoadBalancer",
+    "selector": {
+      "name": "nginx"
+    },
+    "ports": [
+      {
+        "targetPort": "nginx-http",
+        "port": 80,
+        "name": "nginx-http"
+      },
+      {
+        "targetPort": "nginx-https",
+        "port": 443,
+        "name": "nginx-https"
+      }
+    ]
+  },
+  "metadata": {
+    "labels": {
+      "app": "nginx"
+    },
+    "name": "nginx"
+  },
+  "apiVersion": "v1",
+  "kind": "Service"
+}

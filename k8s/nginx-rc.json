@@ -1,0 +1,41 @@
+{
+  "spec": {
+    "template": {
+      "spec": {
+        "containers": [
+          {
+            "ports": [
+              {
+                "containerPort": 80,
+                "name": "nginx-http"
+              },
+              {
+                "containerPort": 443,
+                "name": "nginx-https"
+              }
+            ],
+            "image": "nginx:1.9.9",
+            "name": "nginx"
+          }
+        ]
+      },
+      "metadata": {
+        "labels": {
+          "name": "nginx"
+        }
+      }
+    },
+    "selector": {
+      "name": "nginx"
+    },
+    "replicas": 1
+  },
+  "metadata": {
+    "labels": {
+      "name": "nginx"
+    },
+    "name": "nginx"
+  },
+  "apiVersion": "v1",
+  "kind": "ReplicationController"
+}
