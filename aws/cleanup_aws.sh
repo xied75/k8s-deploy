@@ -9,7 +9,7 @@ do
   status=$(aws cloudformation describe-stacks --stack-name $CLUSTER_NAME | jq -r '.Stacks[0].StackStatus')
 
   case "$status" in
-      null)
+      ""|null)
       exit 0;
       ;;
 
