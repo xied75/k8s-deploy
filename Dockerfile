@@ -20,8 +20,7 @@ RUN chmod +x kubectl
 # get files ready
 RUN bash -c 'mkdir -pv /usr/local/k8s-deploy/{aws,keycloak,nginx}'
 
-VOLUME /usr/local/k8s-deploy
-
+COPY aws/ /usr/local/k8s-deploy/aws
 COPY k8s/ /usr/local/k8s-deploy/k8s
 COPY nginx/ /usr/local/k8s-deploy/nginx
 COPY keycloak /usr/local/k8s-deploy/keycloak

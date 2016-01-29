@@ -2,6 +2,25 @@
 
 # Dong Xie @ 2016
 
+# Only thing we do while re-entry is to destroy the cluster
+if [ -e .k8s-deploy-destroy ] ; then
+    echo "Warning! About to destroy the cluster named $CLUSTER_NAME, call 'docker stop' to abort within 2 mins"
+    sleep 120
+
+    export KUBECONFIG=/usr/local/k8s-deploy/clusters/$CLUSTER_NAME/kubeconfig
+    kubectl delete -f k8s/nginx-service.json
+
+    sleep 60
+
+    kube-aws destroy
+
+    sleep 30
+
+    # In case destroy fail
+    ./aws/cleanup_aws.sh
+    echo "k8s destroy Done... exit"; exit 0;
+fi
+
 # To prevent from re-entry, as we are not idempotent
 if [ -e .k8s-deploy-here ]
 then echo "This has been run before... exit"; exit 1;
@@ -22,6 +41,8 @@ sed -e "s/^clusterName:.*/clusterName: $CLUSTER_NAME/" \
 
 # Up the cluster
 kube-aws up --config=cluster.yaml
+
+if [ $? -ne 0 ] ; then exit $? ; fi
 
 sleep 5
 
@@ -97,24 +118,3 @@ aws route53 change-resource-record-sets --hosted-zone-id $hostedzoneid --change-
 
 echo "k8s deploy Done"
 
-# Looping waiting for destroy, NOT MEANT FOR PRODUCTION!!!
-while [ ! -e .k8s-deploy-destroy ]
-do
-    sleep 120
-done
-
-sleep 60
-
-# Destroy everything
-
-kubectl delete -f k8s/nginx-service.json
-
-sleep 20
-
-kube-aws destroy
-
-sleep 20
-
-echo "k8s destroy Done"
-
-exit 0
