@@ -34,7 +34,7 @@ done
 
 token=
 until [ -n "$token" ]; do
-  token=$(kubectl exec $pod -- curl -s -X POST $url/auth/realms/master/protocol/openid-connect/token  -H "Content-Type: application/x-www-form-urlencoded" -d "username=dong" -d 'password=testing123' -d 'grant_type=password' -d 'client_id=admin-cli' | jq -r '.access_token')
+  token=$(kubectl exec $pod -- curl -s -X POST $url/auth/realms/master/protocol/openid-connect/token  -H "Content-Type: application/x-www-form-urlencoded" -d "username=$KC_USERNAME" -d "password=$KC_PASSWORD" -d "grant_type=password" -d "client_id=admin-cli" | jq -r '.access_token')
   sleep 5
 done
 

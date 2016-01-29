@@ -2,8 +2,14 @@
 
 # Dong Xie @ 2016
 
+# To prevent from re-entry, as we are not idempotent
+if [ -e .k8s-deploy-here ]
+then echo "This has been run before... exit"; exit 1;
+else touch .k8s-deploy-here
+fi
+
 # Check mandate env var
-if [ -z "$KC_USERNAME" -o -z "$KC_PASSWORD" -o -z "$DOMAIN_ROOT" ]
+if [ -z "$KC_USERNAME" -o -z "$KC_PASSWORD" -o -z "$DOMAIN_ROOT" -o -z "$AWS_KEYPAIR_NAME" ]
 then exit 1
 fi
 
@@ -11,6 +17,7 @@ fi
 
 sed -e "s/^clusterName:.*/clusterName: $CLUSTER_NAME/" \
     -e "s/^externalDNSName:.*/externalDNSName: $CLUSTER_NAME\.$DOMAIN_ROOT/" \
+    -e "s/^keyName:.*/keyName: $AWS_KEYPAIR_NAME/" \
     template/cluster.yaml.tpl > cluster.yaml
 
 # Up the cluster
@@ -90,5 +97,24 @@ aws route53 change-resource-record-sets --hosted-zone-id $hostedzoneid --change-
 
 echo "k8s deploy Done"
 
-sleep 100000
+# Looping waiting for destroy, NOT MEANT FOR PRODUCTION!!!
+while [ ! -e .k8s-deploy-destroy ]
+do
+    sleep 120
+done
 
+sleep 60
+
+# Destroy everything
+
+kubectl delete -f k8s/nginx-service.json
+
+sleep 20
+
+kube-aws destroy
+
+sleep 20
+
+echo "k8s destroy Done"
+
+exit 0

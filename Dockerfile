@@ -30,10 +30,12 @@ COPY deploy.sh /usr/local/k8s-deploy/
 
 # ENV, to be overridden
 ENV CLUSTER_NAME=kube1 \
+    AWS_KEYPAIR_NAME= \
     DOMAIN_ROOT= \
     SUBDOMAIN_NAME= \
     KC_USERNAME= \
-    KC_PASSWORD=
+    KC_PASSWORD= \
+    LE_LIVE=
 
 # final work
 WORKDIR /usr/local/k8s-deploy

@@ -35,9 +35,15 @@ sleep 5
 
 # Run letsencrypt
 
-echo "  call letsencrypt ... output silenced"
+echo "  calling letsencrypt ... output silenced"
+
+staging_tag="--staging"
+if [ -n "$LE_LIVE" ]
+then $staging_tag=""
+fi
+
 kubectl exec $pod -- /usr/local/letsencrypt/letsencrypt-auto certonly --email \
-    xied75@gmail.com --domain $1 --keep-until-expiring --agree-tos --staging \
+    xied75@gmail.com --domain $1 --keep-until-expiring --agree-tos $staging_tag \
     --authenticator webroot --webroot-path=/tmp/letsencrypt-auto > /dev/null
 
 # Copy certs
